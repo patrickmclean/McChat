@@ -182,17 +182,18 @@ app.post('/newmsg', function(req, res) {
  // Server side event stream for sending async refresh updates
 app.get('/serverstream', (req, res) => {
     logger.write('serverstream','launch',2);
-    let responseJSON = "";
+    //let responseJSON = "";
+    let responseJSON = JSON.stringify({"type": "refresh","something":"something"}); // for test
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.write(`data: ${responseJSON}\n\n`);   //for test
     res.flushHeaders(); // flush the headers to establish SSE with client
  
     let sub = ps.subscribe('grp1', function(obj) {   // Next - genericize the group setting
        logger.write('serverstream listener uploads',obj.message,2);
        responseJSON = JSON.stringify({"type": "refresh",obj});
        res.write(`data: ${responseJSON}\n\n`);   
-       
     });
     
     // If client closes connection, stop sending events
