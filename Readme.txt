@@ -12,6 +12,12 @@ npm install aws-sdk
 npm install uuid
 npm install path
 
+# To install on server
+Login to AWS Server
+First time: git clone https://github.com/patrickmclean/mcchat.git
+ftp the config file over
+run: cd to app directory
+
 
 Experimental for login
 Based on
