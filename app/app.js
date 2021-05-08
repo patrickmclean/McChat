@@ -192,7 +192,7 @@ app.get('/serverstream', (req, res) => {
        logger.write('serverstream listener uploads',obj.message,2);
        responseJSON = JSON.stringify({"type": "refresh",obj});
        res.write(`data: ${responseJSON}\n\n`);   
-       res.flushHeaders();
+       res.end();
     });
     
     // If client closes connection, stop sending events
