@@ -1,6 +1,11 @@
 **/config
 **/scripts
 **/logs
+**/scratch
+**/server
+**/oldclient
+**/client
+
 
 
 
