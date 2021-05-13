@@ -1,11 +1,14 @@
 <div class="row justify-content-md-center" style="margin-top: 30px">
+    
     <div class="col-md-4">
-
+    
         {{#if message}}
             <div class="alert {{messageClass}}" role="alert">
                 {{message}}
             </div>
         {{/if}}
+
+
 
         <form method="POST" action="/register">
             <div class="form-group">
@@ -29,6 +32,9 @@
                 <input name="confirmPassword" type="password" class="form-control" id="confirmPasswordInput"
                     placeholder="Re-enter your password here">
             </div>
+
+            <div>Don't use a password you're using for anything secure. This system is not guaranteed to be safe</div>
+            <br>
 
             <button type="submit" class="btn btn-primary">Login</button>
         </form>

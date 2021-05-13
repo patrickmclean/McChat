@@ -21,8 +21,7 @@ loadChatHistory = function() {
     success: function(data){
         console.log("loadhistory success"+data.return)
         data.forEach(element => {
-          let messageDisplay = formatChat(element);
-          $( "#history" ).prepend( messageDisplay + '<br>');
+          displayChat(element);   
         });
     },
     error: function(){
@@ -57,10 +56,6 @@ $(document).on("click", "#newmsg", function() {
   })
 })
 
-/* Username password stuff
-https://codeforgeek.com/handle-get-post-request-express-4/
-*/
-
 
 // Event listener for server side events
 // Captures page refresh updates
@@ -70,20 +65,26 @@ var sseSource = new EventSource('/serverstream');
 sseSource.addEventListener('message', (e) => {
     let messageType = JSON.parse(e.data).type;
     let messageObj = JSON.parse(e.data).obj;
-    let messageDisplay = formatChat(messageObj);
-    console.log('sse '+ messageDisplay);
     if (messageType == 'refresh') {
-      $( "#history" ).prepend( messageDisplay + '<br>');
+      displayChat(messageObj);
     };
 });
 
 // Turn message object into how we display the content
-formatChat = function(messageObj){
-  let messageDisplay = messageObj.date.hour + ':' 
-  + messageObj.date.minutes.toLocaleString('en-US',{minimumIntegerDigits:2}) + ' ' 
-  + messageObj.sender + ' => '
+displayChat = function(messageObj){
+  let date = new Date();
+  date.setTime(messageObj.utc);
+  let messageDisplay = '<div class="chat-sendertext">' + messageObj.sender +" " 
+  + date.toLocaleString('en-US',{month: 'short'}) + ' '
+  + messageObj.date.day + ' '
+  + messageObj.date.hour + ':' 
+  + messageObj.date.minutes.toLocaleString('en-US',{minimumIntegerDigits:2}) + ' </div  > ' 
   + messageObj.message;
-  return messageDisplay;
+  if(messageObj.sender == getCookie("User")) {
+    $( "#history" ).prepend('<div class="chat-textbox right">' + messageDisplay + '</div>');
+  } else {
+    $( "#history" ).prepend('<div class="chat-textbox left">' + messageDisplay + '</div>');
+  }
 }
 
 // Parse cookie
