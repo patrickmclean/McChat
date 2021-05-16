@@ -1,7 +1,8 @@
 // Function gets called once page load has succeeded
 $(document).ready(function() {
     // Load chat history on first open
-    loadChatHistory();   
+    loadChatHistory();  
+    enterSubmits(); // set enter key to submit 
 })
 
 // Load chat history
@@ -51,7 +52,8 @@ $(document).on("click", "#newmsg", function() {
       console.log("ajax error");
     },
     complete: function(){
-      console.log("complete")
+      console.log("complete");
+      document.getElementById("mytxt").value = "";
     } 
   })
 })
@@ -113,4 +115,19 @@ function checkCookie() {
       setCookie("username", user, 365);
     }
   }
+}
+
+// Make the enter key click the submit button
+function enterSubmits() {
+  var input = document.getElementById("mytxt");
+  // Execute a function when the user releases a key on the keyboard
+  input.addEventListener("keyup", function(event) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+          // Trigger the button element with a click
+          document.getElementById("newmsg").click();
+      }
+  });
 }
