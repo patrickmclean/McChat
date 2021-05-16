@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const https = require('https');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
@@ -205,9 +206,18 @@ app.get('/serverstream', (req, res) => {
  });
 
 // The server itself
-var server = app.listen(8082, function () {
-    var host = server.address().address
-    var port = server.address().port
-    console.log("App listening at http://%s:%s", host, port)
-    //logger.write('app','launched',1);
- })
+//var server = app.listen(8082, function () {
+//    var host = server.address().address
+//    var port = server.address().port
+//    console.log("App listening at http://%s:%s", host, port)
+//    //logger.write('app','launched',1);
+// })
+
+
+ const server = https.createServer({
+    key: fs.readFileSync('./config/server.key'),
+    cert: fs.readFileSync('./config/server.cert')
+  }, app)
+  .listen(8082, function () {
+    console.log("App listening at https://%s:%s", server.address().address, server.address().port)
+  })
