@@ -218,6 +218,6 @@ app.get('/serverstream', (req, res) => {
     key: fs.readFileSync('./config/server.key'),
     cert: fs.readFileSync('./config/server.cert')
   }, app)
-  .listen(8082, function () {
+  .listen(3000, function () {
     console.log("App listening at https://%s:%s", server.address().address, server.address().port)
   })
