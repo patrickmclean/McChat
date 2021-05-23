@@ -19,6 +19,9 @@ First time: git clone https://github.com/patrickmclean/mcchat.git
 ftp the config file over
 run: cd to app directory
 
+# To allow the server to run https on port 443 
+sudo setcap 'cap_net_bind_service=+ep' ~/.nvm/versions/node/v14.14.0/bin/node
+
 # Download the latest (need to move config out of the way due to .gitignore, must be a better way)
 mv config ..
 git pull
@@ -27,7 +30,7 @@ mv ../config .
 restart the app:
 ps -aux to get the process number
 kill -9 PID
-node ./server/main.js &
+node app.js &
 Application is running on X.X.X.X:8082
 
 
